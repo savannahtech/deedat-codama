@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userPhone} {
+      // Allow read for anyone
+      allow read;
+     
+      // Allow write only if the user matches the document ID
+      allow write: if request.auth.token.phone_number == userPhone;
+    }
+  }
+}
